@@ -460,6 +460,37 @@ img {
   align-items: center;
 }
 
+.hero-content-col {
+  animation: heroContentFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroContentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-media-wrapper {
+  position: relative;
+  animation: heroMediaSlideIn 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+}
+
+@keyframes heroMediaSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
 .pulse-dot {
   width: 8px;
   height: 8px;
@@ -1710,4 +1741,281 @@ img {
   .footer-grid {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* ==========================================================================
+   ADVANCED ANIMATIONS & TRANSITION SYSTEM
+   ========================================================================== */
+
+/* Global Smooth Interpolation */
+html, body, .navbar, .capability-pill-card, .project-card, .advantage-card, 
+.client-card-item, .tech-table, input, select, .conversion-box, .metric-card {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Ambient Gentle Floating for Featured Hero Media */
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Radar pulse for live status indicators */
+@keyframes radarPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Crimson badge pulse */
+@keyframes crimsonPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px 2px rgba(225, 29, 72, 0.3);
+  }
+}
+
+/* Pulse on value calculation change */
+@keyframes valuePulse {
+  0% {
+    transform: scale(1.08);
+    color: var(--brand-primary);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.calc-updated {
+  animation: valuePulse 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Scroll Reveal Base Classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.94) translateY(20px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.revealed {
+  opacity: 1 !important;
+  transform: translate(0) scale(1) !important;
+}
+
+/* Staggered delay helpers */
+.stagger-1 { transition-delay: 70ms !important; }
+.stagger-2 { transition-delay: 140ms !important; }
+.stagger-3 { transition-delay: 210ms !important; }
+.stagger-4 { transition-delay: 280ms !important; }
+.stagger-5 { transition-delay: 350ms !important; }
+.stagger-6 { transition-delay: 420ms !important; }
+
+/* Primary CTA Light Beam Shimmer */
+.btn-hero-primary, .btn-cta-primary {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hero-primary::after, .btn-cta-primary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -130%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: rotate(25deg);
+  pointer-events: none;
+}
+
+.btn-hero-primary:hover::after, .btn-cta-primary:hover::after {
+  left: 180%;
+  transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hero-primary:hover, .btn-cta-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(225, 29, 72, 0.5);
+}
+
+/* Secondary Button Arrow Glide */
+.btn-hero-secondary {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hero-secondary svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-hero-secondary:hover svg {
+  transform: translateX(5px);
+}
+
+.btn-hero-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-cyan);
+  color: var(--brand-cyan);
+  box-shadow: var(--shadow-md);
+}
+
+/* Featured Hero Card Gentle Floating */
+.hero-card-featured {
+  animation: gentleFloat 6s ease-in-out infinite;
+}
+
+.hero-card-featured:hover {
+  animation-play-state: paused;
+  transform: translateY(-8px);
+  border-color: var(--border-cyan);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12), var(--shadow-cyan);
+}
+
+/* Card Hover Elevation & Rich Glow */
+.project-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-highlight);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1), var(--shadow-crimson);
+}
+
+.project-card:hover .project-thumb-box img {
+  transform: scale(1.08);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-inspect-machine {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-inspect-machine:hover {
+  transform: translateY(-2px);
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #FFFFFF;
+  box-shadow: 0 6px 18px var(--brand-primary-glow);
+}
+
+/* Capability Cards & Advantages */
+.capability-pill-card, .advantage-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.capability-pill-card:hover, .advantage-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-cyan);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08), var(--shadow-cyan);
+}
+
+.capability-pill-card:hover .pill-icon-wrap, .advantage-card:hover .adv-icon-wrap {
+  transform: scale(1.15) rotate(-6deg);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pill-icon-wrap, .adv-icon-wrap {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Metric Cards */
+.metric-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border-highlight);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08), var(--shadow-crimson);
+}
+
+.metric-value {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.metric-card:hover .metric-value {
+  transform: scale(1.05);
+}
+
+/* Navbar Icon Micro-Interactions */
+.btn-icon-theme:hover svg {
+  transform: rotate(20deg) scale(1.15);
+}
+
+.btn-icon-theme svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-icon-search:hover svg {
+  transform: scale(1.18);
+}
+
+.btn-icon-search svg {
+  transition: transform 0.25s ease;
+}
+
+.top-announcement .badge-pill {
+  animation: crimsonPulse 3s infinite ease-in-out;
+}
+
+.pulse-dot {
+  animation: radarPulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Floating Action Buttons Micro-Animation */
+.floating-action-desk {
+  animation: fabEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fabEntrance {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fab-btn {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+.fab-btn:hover {
+  transform: scale(1.15) translateY(-3px);
 }

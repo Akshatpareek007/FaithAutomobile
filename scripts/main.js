@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRFQCalculator();
   initMachineModal();
   initMetricsCounter();
+  initScrollReveal();
 });
 
 /* ==========================================================================
@@ -42,7 +43,7 @@ function initNavbar() {
   const navMenu = document.querySelector('.nav-menu');
   const navLinks = document.querySelectorAll('.nav-link');
 
-  // Sticky background on scroll
+  // Sticky background on scroll with smooth transition
   window.addEventListener('scroll', () => {
     if (window.scrollY > 30) {
       navbar.classList.add('scrolled');
@@ -76,9 +77,65 @@ function initNavbar() {
         navMenu.style.borderRadius = 'var(--radius-lg)';
         navMenu.style.border = '1px solid var(--border-medium)';
         navMenu.style.marginTop = '0.5rem';
+        navMenu.style.boxShadow = 'var(--shadow-lg)';
       }
     });
   }
+}
+
+/* ==========================================================================
+   SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER)
+   ========================================================================== */
+function initScrollReveal() {
+  const targets = document.querySelectorAll(`
+    .section-header, 
+    .capability-pill-card, 
+    .project-card, 
+    .advantage-card, 
+    .metric-card, 
+    .client-card-item, 
+    .workflow-step-card, 
+    .table-responsive-box, 
+    .conversion-box, 
+    .hero-card-featured
+  `);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  // Apply stagger classes within parent grids
+  const grids = document.querySelectorAll(`
+    .capability-pills-grid, 
+    .projects-grid, 
+    .advantages-grid, 
+    .metrics-grid, 
+    .clients-grid
+  `);
+
+  grids.forEach(grid => {
+    const children = Array.from(grid.children);
+    children.forEach((child, idx) => {
+      child.classList.add('reveal', `stagger-${(idx % 6) + 1}`);
+      observer.observe(child);
+    });
+  });
+
+  // Observe standalone elements
+  targets.forEach(el => {
+    if (!el.classList.contains('reveal')) {
+      el.classList.add('reveal');
+      observer.observe(el);
+    }
+  });
 }
 
 /* ==========================================================================
@@ -96,8 +153,8 @@ function renderCapabilityPills() {
     "shield-check": `<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`
   };
 
-  container.innerHTML = capabilityPills.map(item => `
-    <div class="capability-pill-card">
+  container.innerHTML = capabilityPills.map((item, idx) => `
+    <div class="capability-pill-card reveal stagger-${idx + 1}">
       <div class="pill-icon-wrap">
         ${icons[item.icon] || icons.layers}
       </div>
@@ -108,7 +165,7 @@ function renderCapabilityPills() {
 }
 
 /* ==========================================================================
-   PROJECT CATALOGUE & FILTERING
+   PROJECT CATALOGUE & FILTERING WITH ANIMATION
    ========================================================================== */
 let activeCategory = 'all';
 
@@ -119,10 +176,21 @@ function renderProjectCatalog() {
 
   filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {
+      if (btn.classList.contains('active')) return;
       filterButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeCategory = btn.getAttribute('data-filter');
-      displayFilteredProjects();
+
+      // Smooth fade-out before updating
+      container.style.opacity = '0';
+      container.style.transform = 'translateY(10px)';
+      container.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+
+      setTimeout(() => {
+        displayFilteredProjects();
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+      }, 230);
     });
   });
 
@@ -137,10 +205,10 @@ function displayFilteredProjects() {
     ? projectCatalog
     : projectCatalog.filter(p => p.category === activeCategory);
 
-  container.innerHTML = filtered.map(p => {
+  container.innerHTML = filtered.map((p, idx) => {
     const specEntries = Object.entries(p.specs).slice(0, 2);
     return `
-      <div class="project-card" data-id="${p.id}">
+      <div class="project-card reveal revealed stagger-${(idx % 6) + 1}" data-id="${p.id}">
         <div class="project-thumb-box">
           <img src="${p.image}" alt="${p.title}" loading="lazy" />
           <span class="project-badge-tag">${p.category}</span>
@@ -158,8 +226,8 @@ function displayFilteredProjects() {
             `).join('')}
           </div>
           <button class="btn-inspect-machine" onclick="window.openMachineModal('${p.id}')">
-            <span>Inspect Technical Specs</span>
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <span>Machine Specifications</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
         </div>
       </div>
@@ -182,7 +250,7 @@ function renderToolRoomTable() {
     );
 
     tableBody.innerHTML = list.map(item => `
-      <tr>
+      <tr style="transition: background 0.2s ease;">
         <td style="font-family: var(--font-mono); color: var(--text-dim);">${item.sNo}</td>
         <td style="font-weight: 700; color: var(--text-title);">${item.machine}</td>
         <td style="font-family: var(--font-mono); color: var(--text-secondary);">${item.spec}</td>
@@ -222,11 +290,11 @@ function renderClients() {
   }
 
   if (clientsGrid) {
-    clientsGrid.innerHTML = clientsList.slice(0, 16).map(c => `
-      <div class="client-card-item">
-        <h4 class="client-card-name">${c.name}</h4>
-        <span class="client-card-plant">${c.plant}</span>
-        <span class="client-card-cat">${c.category}</span>
+    clientsGrid.innerHTML = clientsList.map((c, idx) => `
+      <div class="client-card-item reveal stagger-${(idx % 6) + 1}">
+        <div class="client-card-name">${c.name}</div>
+        <div class="client-card-plant">${c.plant}</div>
+        <div class="client-card-cat">${c.category}</div>
       </div>
     `).join('');
   }
@@ -276,10 +344,18 @@ function initRFQCalculator() {
       feasibility = "Optimized Single-Operator Flow";
     }
 
-    if (resLineType) resLineType.textContent = lineType;
-    if (resPokaYoke) resPokaYoke.textContent = pokaYoke;
-    if (resFeasibility) resFeasibility.textContent = feasibility;
-    if (resEstLeadTime) resEstLeadTime.textContent = leadTime;
+    const updateWithAnimation = (el, text) => {
+      if (!el) return;
+      el.textContent = text;
+      el.classList.remove('calc-updated');
+      void el.offsetWidth; // Trigger reflow for animation restart
+      el.classList.add('calc-updated');
+    };
+
+    updateWithAnimation(resLineType, lineType);
+    updateWithAnimation(resPokaYoke, pokaYoke);
+    updateWithAnimation(resFeasibility, feasibility);
+    updateWithAnimation(resEstLeadTime, leadTime);
   }
 
   if (componentSelect) componentSelect.addEventListener('change', calculate);
@@ -334,39 +410,54 @@ function initMachineModal() {
 }
 
 /* ==========================================================================
-   METRICS COUNTER ANIMATION
+   METRICS COUNTER ANIMATION (SMOOTH CUBIC EASE-OUT)
    ========================================================================== */
 function initMetricsCounter() {
-  const metricValues = document.querySelectorAll('.metric-value');
+  const metricCards = document.querySelectorAll('.metric-card');
+  if (!metricCards.length) return;
+
   let animated = false;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !animated) {
         animated = true;
-        metricValues.forEach(el => {
-          const text = el.textContent;
-          // Extract numbers if simple
-          const target = parseInt(text.replace(/\D/g, ''));
+        metricCards.forEach(card => {
+          const el = card.querySelector('.metric-value');
+          if (!el) return;
+          const fullText = el.textContent.trim();
+          const target = parseInt(fullText.replace(/\D/g, ''));
           if (isNaN(target)) return;
 
-          let count = 0;
-          const step = Math.ceil(target / 40);
-          const interval = setInterval(() => {
-            count += step;
-            if (count >= target) {
-              el.textContent = text;
-              clearInterval(interval);
+          const suffix = fullText.replace(/^[0-9]+/, '');
+          const duration = 1800; // ms
+          const startTime = performance.now();
+
+          function step(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Cubic ease-out
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(easeOut * target);
+
+            el.textContent = `${current}${suffix}`;
+
+            if (progress < 1) {
+              requestAnimationFrame(step);
             } else {
-              el.textContent = text.replace(target.toString(), count.toString());
+              el.textContent = fullText;
+              el.classList.add('calc-updated');
             }
-          }, 35);
+          }
+
+          requestAnimationFrame(step);
         });
+        observer.disconnect();
       }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0.25 });
 
-  const metricsSection = document.querySelector('.metrics-bar-section');
+  const metricsSection = document.querySelector('.metrics-bar-section') || metricCards[0];
   if (metricsSection) {
     observer.observe(metricsSection);
   }
