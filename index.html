@@ -37,8 +37,9 @@
   <!-- Sticky Glassmorphic Navbar -->
   <div class="navbar-wrapper">
     <nav class="navbar" id="mainNavbar">
-      <a href="#hero" class="brand-logo-wrap" id="navLogo" title="Faith Automation Works">
-        <img src="/assets/images/logo_dark.png" alt="Faith Automation Works" class="brand-logo-img" />
+      <a href="/" class="brand-logo-wrap" id="navLogo" title="Faith Automation Works">
+        <img src="/assets/images/logo_transparent.png" alt="Faith Automation Works" class="brand-logo-img logo-light" />
+        <img src="/assets/images/logo_dark.png" alt="Faith Automation Works" class="brand-logo-img logo-dark" />
       </a>
 
       <ul class="nav-menu" id="navMenu">
@@ -52,6 +53,10 @@
       </ul>
 
       <div class="nav-actions">
+        <button class="btn-icon-theme" id="btnThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+          <svg class="icon-sun" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
         <button class="btn-icon-search" id="btnSearchTrigger" title="Quick Search" onclick="window.location.href='/toolroom.html';">
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
@@ -143,7 +148,7 @@
   </section>
 
   <!-- Filterable Projects & Machine Showcase -->
-  <section class="section-spacing" id="projects" style="background: rgba(14, 18, 26, 0.45);">
+  <section class="section-spacing section-alt-bg" id="projects">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Special Purpose Machines & <span class="gradient-text">Automated Systems</span></h2>
@@ -205,7 +210,7 @@
   </section>
 
   <!-- 4-Pillar Operational Advantages -->
-  <section class="section-spacing" id="advantages" style="background: rgba(14, 18, 26, 0.45);">
+  <section class="section-spacing section-alt-bg" id="advantages">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Why Tier-1 Automotive Leaders <span class="gradient-text">Trust Faith Automation</span></h2>
@@ -423,7 +428,7 @@
   </section>
 
   <!-- Esteemed Clients Marquee & Grid -->
-  <section class="section-spacing" id="clients" style="background: rgba(14, 18, 26, 0.45);">
+  <section class="section-spacing section-alt-bg" id="clients">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Trusted by Leading <span class="gradient-text">Automotive Manufacturers</span></h2>

@@ -1,6 +1,13 @@
 import { siteConfig, capabilityPills, projectCatalog, toolRoomInventory, clientsList, processWorkflow } from './data.js';
 
+// Apply initial theme immediately to prevent flashing
+(function() {
+  const savedTheme = localStorage.getItem('faith_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initNavbar();
   renderCapabilityPills();
   renderProjectCatalog();
@@ -10,6 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
   initMachineModal();
   initMetricsCounter();
 });
+
+/* ==========================================================================
+   THEME TOGGLE SYSTEM (LIGHT / DARK)
+   ========================================================================== */
+function initThemeToggle() {
+  const themeBtn = document.getElementById('btnThemeToggle');
+  if (!themeBtn) return;
+
+  themeBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    localStorage.setItem('faith_theme', nextTheme);
+  });
+}
 
 /* ==========================================================================
    NAVBAR & SCROLL BEHAVIOR
@@ -162,7 +184,7 @@ function renderToolRoomTable() {
     tableBody.innerHTML = list.map(item => `
       <tr>
         <td style="font-family: var(--font-mono); color: var(--text-dim);">${item.sNo}</td>
-        <td style="font-weight: 700; color: #FFFFFF;">${item.machine}</td>
+        <td style="font-weight: 700; color: var(--text-title);">${item.machine}</td>
         <td style="font-family: var(--font-mono); color: var(--text-secondary);">${item.spec}</td>
         <td style="font-family: var(--font-mono); font-weight: 700; color: var(--brand-cyan-light);">${item.qty} Unit${item.qty > 1 ? 's' : ''}</td>
         <td>
