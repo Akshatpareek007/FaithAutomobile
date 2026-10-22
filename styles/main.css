@@ -1341,7 +1341,12 @@ img {
   display: flex;
   gap: 2rem;
   width: max-content;
-  animation: ticker 35s linear infinite;
+  animation: ticker 65s linear infinite;
+  will-change: transform;
+}
+
+.clients-ticker-wrap:hover .clients-ticker-track {
+  animation-play-state: paused;
 }
 
 @keyframes ticker {
@@ -1690,9 +1695,10 @@ img {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN BREAKPOINTS
+   COMPREHENSIVE RESPONSIVE DESIGN FOR ALL SCREEN SIZES
    ========================================================================== */
 
+/* Tablet & Smaller Laptops (<= 1024px) */
 @media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;
@@ -1716,30 +1722,473 @@ img {
   }
 }
 
+/* Tablets & Mobile Landscape (<= 768px) */
 @media (max-width: 768px) {
-  .nav-menu {
-    display: none;
+  /* Announcement bar */
+  .top-announcement {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+    line-height: 1.4;
   }
+
+  .navbar-wrapper {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 1000;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .navbar {
+    position: relative;
+    padding: 0.4rem 0.75rem;
+    min-height: 48px;
+    background: var(--bg-surface);
+  }
+
+  .brand-logo-img {
+    height: 28px;
+    max-width: 170px;
+  }
+
+  .nav-actions #btnNavRFQ,
+  .nav-actions .btn-cta-primary {
+    display: none !important;
+  }
+
+  .nav-actions #btnSearchTrigger,
+  .nav-actions .btn-icon-search {
+    display: none !important;
+  }
+
   .mobile-menu-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all var(--transition-fast);
   }
+
+  .mobile-menu-toggle.open svg {
+    transform: rotate(90deg);
+  }
+
+  /* Anchored Slide-Down Mobile Navigation Menu */
+  .nav-menu {
+    position: absolute !important;
+    top: calc(100% + 0.6rem) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-height: calc(90vh - 65px) !important;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-medium) !important;
+    border-radius: var(--radius-xl) !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25) !important;
+    padding: 1.15rem !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    z-index: 1002 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-10px) scale(0.98) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    margin-top: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-menu.open {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) scale(1) !important;
+  }
+
+  .nav-menu .nav-link {
+    font-size: 0.975rem !important;
+    font-weight: 600 !important;
+    padding: 0.7rem 1rem !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--border-subtle) !important;
+    background: var(--bg-surface-elevated) !important;
+    width: 100% !important;
+    display: block !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    color: var(--text-main) !important;
+    transition: all var(--transition-fast) !important;
+  }
+
+  .nav-menu .nav-link:hover {
+    background: var(--bg-surface-highlight) !important;
+  }
+
+  .nav-menu .nav-link.active {
+    background: var(--brand-primary-muted) !important;
+    border-color: var(--brand-primary) !important;
+    color: var(--brand-primary) !important;
+    font-weight: 700 !important;
+  }
+
+  .nav-menu-cta-mobile {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-heading {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+    line-height: 1.18;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-hero-primary, .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.25rem;
+    box-sizing: border-box;
+  }
+
+  .hero-image-box {
+    height: 250px;
+  }
+
+  /* Section Spacings */
+  .section-spacing {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.25rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 5.5vw, 2.25rem);
+    line-height: 1.2;
+  }
+
+  .section-description {
+    font-size: 0.95rem;
+  }
+
+  /* Metrics Bar */
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
   }
+
+  .metric-card {
+    padding: 1.15rem 1rem;
+  }
+
+  .metric-value {
+    font-size: 1.85rem;
+  }
+
+  /* Capability Cards (Single Column Clean Stack) */
+  .capability-pills-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  /* Filter Navigation Bar (Touch-Swipeable Horizontal Pills) */
+  .filter-nav-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0.25rem 0.5rem 0.85rem 0.5rem;
+    margin: 0 -1rem 1.75rem -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filter-nav-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Projects Grid */
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-  .split-infra-grid {
-    grid-template-columns: 1fr;
+
+  .project-thumb-box {
+    height: 200px;
   }
+
+  .project-body {
+    padding: 1.25rem;
+  }
+
+  /* 4-Pillar Advantages */
   .advantages-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
+
+  /* Tool Room Table */
+  .table-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .table-search-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .table-responsive-box {
+    margin: 0 -0.5rem;
+    border-radius: var(--radius-md);
+  }
+
+  .tech-table {
+    min-width: 580px;
+  }
+
+  .tech-table th, .tech-table td {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.8125rem;
+  }
+
+  /* Esteemed Clients */
   .clients-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
   }
+
+  .client-card-item {
+    padding: 1rem;
+  }
+
+  /* Conversion Box */
+  .conversion-box {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .conversion-title {
+    font-size: 1.75rem;
+  }
+
+  .conversion-btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .conversion-btn-group .btn-hero-primary,
+  .conversion-btn-group .btn-hero-secondary {
+    width: 100%;
+  }
+
+  /* Floating Action Buttons */
+  .floating-action-desk {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .fab-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .fab-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Footer */
+  .footer-section {
+    padding-top: 3.5rem;
+    padding-bottom: 1.5rem;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  /* Modal */
+  .modal-container {
+    width: 95%;
+    max-height: 92vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-media-header {
+    height: 220px;
+  }
+
+  .modal-content-body {
+    padding: 1.25rem;
+  }
+}
+
+/* Small SmartPhones & Phablets (<= 480px, e.g. iPhone SE, 13/14/15, Pixel, Galaxy) */
+@media (max-width: 480px) {
+  /* Announcement bar */
+  .top-announcement {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.5rem;
+    text-align: center;
+  }
+
+  .top-announcement .badge-pill {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.45rem;
+  }
+
+  /* In navbar, keep only logo, theme toggle, and hamburger */
+  .nav-actions #btnNavRFQ {
+    display: none;
+  }
+
+  .nav-actions #btnSearchTrigger {
+    display: none;
+  }
+
+  .brand-logo-img {
+    height: 24px;
+    max-width: 140px;
+  }
+
+  /* Hero Section */
+  .hero-heading {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.9rem;
+  }
+
+  .hero-image-box {
+    height: 210px;
+  }
+
+  .hero-media-caption {
+    padding: 1rem;
+  }
+
+  .hero-media-title {
+    font-size: 1rem;
+  }
+
+  .hero-media-specs {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  /* Metrics Grid */
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .metric-card {
+    padding: 0.9rem 0.75rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+  }
+
+  .metric-sub {
+    font-size: 0.6875rem;
+  }
+
+  /* Clients Grid */
+  .clients-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .client-card-name {
+    font-size: 0.875rem;
+  }
+
+  /* RFQ Form */
+  .rfq-form-card, .rfq-summary-card {
+    padding: 1.25rem 1rem !important;
+  }
+
+  .form-group-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Extra Small Phones (<= 360px, e.g. Galaxy Z Flip outer, small older phones) */
+@media (max-width: 360px) {
+  .brand-logo-img {
+    height: 22px;
+    max-width: 125px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-heading {
+    font-size: 1.55rem;
+  }
+
+  .btn-hero-primary, .btn-hero-secondary {
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
   }
 }
 

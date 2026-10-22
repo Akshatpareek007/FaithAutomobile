@@ -63,22 +63,45 @@ function initNavbar() {
   });
 
   if (mobileToggle && navMenu) {
-    mobileToggle.addEventListener('click', () => {
-      const isVisible = navMenu.style.display === 'flex';
-      navMenu.style.display = isVisible ? 'none' : 'flex';
-      if (!isVisible) {
-        navMenu.style.position = 'absolute';
-        navMenu.style.top = '100%';
-        navMenu.style.left = '0';
-        navMenu.style.right = '0';
-        navMenu.style.background = 'var(--bg-surface)';
-        navMenu.style.flexDirection = 'column';
-        navMenu.style.padding = '1.5rem';
-        navMenu.style.borderRadius = 'var(--radius-lg)';
-        navMenu.style.border = '1px solid var(--border-medium)';
-        navMenu.style.marginTop = '0.5rem';
-        navMenu.style.boxShadow = 'var(--shadow-lg)';
+    // Inject mobile drawer CTA if not present
+    if (!navMenu.querySelector('.nav-menu-cta-mobile')) {
+      const mobileCta = document.createElement('div');
+      mobileCta.className = 'nav-menu-cta-mobile';
+      mobileCta.innerHTML = `
+        <a href="/rfq.html" class="btn-cta-primary" style="width: 100%; justify-content: center; padding: 0.85rem; font-size: 0.95rem; box-sizing: border-box;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Request Technical RFQ</span>
+        </a>
+        <div style="font-size: 0.8rem; color: var(--text-dim); text-align: center; margin-top: 0.5rem; font-family: var(--font-mono);">
+          Direct Engineering: +91 9990813151
+        </div>
+      `;
+      navMenu.appendChild(mobileCta);
+    }
+
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navMenu.classList.toggle('open');
+      mobileToggle.classList.toggle('open');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+        navMenu.classList.remove('open');
+        mobileToggle.classList.remove('open');
+        document.body.style.overflow = '';
       }
+    });
+
+    // Close when clicking a nav link
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        mobileToggle.classList.remove('open');
+        document.body.style.overflow = '';
+      });
     });
   }
 }
