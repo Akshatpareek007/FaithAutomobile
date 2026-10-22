@@ -339,6 +339,10 @@ img {
   flex-wrap: nowrap;
 }
 
+.nav-menu-cta-mobile {
+  display: none !important;
+}
+
 .nav-link {
   font-size: 0.825rem;
   font-weight: 500;
