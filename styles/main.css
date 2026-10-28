@@ -4,6 +4,68 @@
    Supports: Light Theme (Default) & Dark Theme with Instant Switching
    ========================================================================== */
 
+/* ==========================================================================
+   PAGE TRANSITION - No flash, smooth content only
+   ========================================================================== */
+#page-transition-overlay {
+  display: none !important;
+}
+
+/* Subtle content fade on page load - no white flash */
+body.page-loaded .hero-content-col {
+  animation: contentFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+body.page-loaded .hero-media-wrapper {
+  animation: contentFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+body.page-loaded .section-header {
+  animation: contentFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth content reveal on page load */
+body.page-loaded .hero-section {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+body.page-loaded .navbar-wrapper {
+  animation: fadeInDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Light Theme Variables (Default) */
 :root, [data-theme="light"] {
   --bg-canvas: #F8FAFC;
@@ -287,14 +349,62 @@ img {
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 52px;
+  transform: translateY(0);
 }
 
 .navbar.scrolled {
   background: var(--navbar-scrolled-bg);
   border-color: var(--border-highlight);
   box-shadow: var(--shadow-lg), var(--shadow-crimson);
+  transform: translateY(-0.25rem);
+}
+
+/* Smooth nav link transitions */
+.nav-link {
+  position: relative;
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-full);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--brand-primary);
+  border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.1;
+}
+
+.nav-link:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-link:hover {
+  color: var(--brand-primary);
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  color: var(--brand-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
 }
 
 .brand-logo-wrap {
@@ -341,32 +451,6 @@ img {
 
 .nav-menu-cta-mobile {
   display: none !important;
-}
-
-.nav-link {
-  font-size: 0.825rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  padding: 0.45rem 0.75rem;
-  border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  line-height: 1;
-}
-
-.nav-link:hover {
-  color: var(--text-main);
-  background: var(--bg-surface-highlight);
-}
-
-.nav-link.active {
-  color: var(--brand-primary);
-  background: var(--bg-surface);
-  border: 1px solid var(--border-medium);
-  box-shadow: var(--shadow-sm);
-  font-weight: 600;
 }
 
 .nav-actions {
@@ -1324,20 +1408,26 @@ img {
 .summary-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   font-size: 0.875rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px dashed var(--border-subtle);
+  gap: 1rem;
 }
 
 .summary-row .label {
   color: var(--text-muted);
+  flex-shrink: 0;
+  max-width: 45%;
 }
 
 .summary-row .value {
   font-weight: 600;
   font-family: var(--font-mono);
   color: var(--brand-cyan);
+  text-align: right;
+  word-break: break-word;
+  max-width: 55%;
 }
 
 /* ==========================================================================
@@ -1942,8 +2032,47 @@ img {
 
   /* Capability Cards (Single Column Clean Stack) */
   .capability-pills-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 0.85rem;
+  }
+
+  .capability-pills-grid[style*="repeat(5"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .capability-pills-grid[style*="repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .capability-pill-card {
+    padding: 1.25rem;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .capability-pill-card .pill-icon-wrap {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .capability-pill-card .pill-title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .capability-pill-card .pill-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* Workflow step cards with numbers - vertical layout */
+  .capability-pill-card .pill-icon-wrap[style*="font-family: var(--font-mono)"] {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
   }
 
   /* Filter Navigation Bar (Touch-Swipeable Horizontal Pills) */
@@ -1984,10 +2113,47 @@ img {
     padding: 1.25rem;
   }
 
-  /* 4-Pillar Advantages */
-  .advantages-grid {
-    grid-template-columns: 1fr;
+  /* 4-Pillar Advantages - 2 columns on mobile, override inline styles */
+  .advantages-grid,
+  .advantages-grid[style*="grid-template-columns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 1rem;
+  }
+
+  .advantages-grid[style*="repeat(3"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .advantage-card {
+    padding: 1.25rem;
+  }
+
+  .advantage-card .advantage-number {
+    font-size: 1.25rem;
+    top: 0.75rem;
+    right: 1rem;
+  }
+
+  .advantage-card .advantage-icon-box {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem;
+  }
+
+  .advantage-card .advantage-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .advantage-card .advantage-desc {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .advantage-card > div[style*="font-family: var(--font-mono)"] {
+    font-size: 0.7rem !important;
+    margin-top: 0.75rem !important;
   }
 
   /* Dual-Pillar Turnkey Infrastructure Grid (Stack Vertically on Mobile) */
@@ -2062,14 +2228,53 @@ img {
     font-size: 0.8125rem;
   }
 
-  /* Esteemed Clients */
-  .clients-grid {
-    grid-template-columns: repeat(2, 1fr);
+  /* Esteemed Clients - Horizontal scrollable 2-column grid */
+  .clients-grid,
+  .clients-grid[style*="grid-template-columns"] {
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand-primary) var(--border-subtle);
+  }
+
+  .clients-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .clients-grid::-webkit-scrollbar-track {
+    background: var(--border-subtle);
+    border-radius: var(--radius-full);
+  }
+
+  .clients-grid::-webkit-scrollbar-thumb {
+    background: var(--brand-primary);
+    border-radius: var(--radius-full);
   }
 
   .client-card-item {
+    flex: 0 0 calc(50% - 0.375rem);
+    min-width: 160px;
     padding: 1rem;
+    scroll-snap-align: start;
+  }
+
+  .client-card-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .client-card-plant {
+    font-size: 0.75rem;
+  }
+
+  .client-card-cat {
+    font-size: 0.7rem;
+    line-height: 1.4;
   }
 
   /* Conversion Box */
@@ -2218,13 +2423,30 @@ img {
     font-size: 0.6875rem;
   }
 
-  /* Clients Grid */
-  .clients-grid {
-    grid-template-columns: 1fr;
+  /* Clients Grid - Extra small screens */
+  .clients-grid,
+  .clients-grid[style*="grid-template-columns"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .client-card-item {
+    flex: 0 0 calc(50% - 0.325rem);
+    min-width: 140px;
+    padding: 0.875rem;
   }
 
   .client-card-name {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+  }
+
+  .client-card-plant {
+    font-size: 0.7rem;
+  }
+
+  .client-card-cat {
+    font-size: 0.65rem;
   }
 
   /* Dual-Pillar Stack Tuning for Small Phones */
@@ -2269,6 +2491,79 @@ img {
   .form-group-grid {
     grid-template-columns: 1fr !important;
   }
+
+  /* RFQ Form Mobile Fixes */
+  .rfq-calculator-card {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .rfq-grid {
+    gap: 1.5rem;
+  }
+
+  .rfq-form-title {
+    font-size: 1.25rem;
+  }
+
+  .rfq-form-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .form-label {
+    font-size: 0.75rem;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .form-select, .form-input {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  /* Fix long button text on mobile */
+  .rfq-calculator-card .btn-cta-primary {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+    min-height: 48px;
+  }
+
+  .rfq-calculator-card .btn-cta-primary svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+
+  .rfq-summary-panel {
+    padding: 1rem;
+  }
+
+  .summary-headline {
+    font-size: 1rem;
+  }
+
+  .summary-row {
+    font-size: 0.8125rem;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .summary-row .label {
+    flex: 0 0 auto;
+    min-width: unset;
+    max-width: 40%;
+  }
+
+  .summary-row .value {
+    flex: 1;
+    text-align: right;
+    max-width: 60%;
+    word-break: break-word;
+  }
 }
 
 /* Extra Small Phones (<= 360px, e.g. Galaxy Z Flip outer, small older phones) */
@@ -2289,6 +2584,65 @@ img {
   .btn-hero-primary, .btn-hero-secondary {
     font-size: 0.875rem;
     padding: 0.75rem 1rem;
+  }
+
+  /* RFQ Form extra small screen fixes */
+  .rfq-calculator-card {
+    padding: 1rem;
+  }
+
+  .rfq-form-title {
+    font-size: 1.1rem;
+  }
+
+  .form-label {
+    font-size: 0.7rem;
+  }
+
+  .form-select, .form-input {
+    padding: 0.6rem 0.65rem;
+    font-size: 0.85rem;
+  }
+
+  .rfq-calculator-card .btn-cta-primary {
+    padding: 0.7rem 0.75rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+
+  .rfq-calculator-card .btn-cta-primary svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .summary-row {
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .summary-row .label {
+    flex: 0 0 auto;
+    max-width: 35%;
+    font-size: 0.75rem;
+  }
+
+  .summary-row .value {
+    flex: 1;
+    max-width: 65%;
+    text-align: right;
+    font-size: 0.75rem;
+    word-break: break-word;
+  }
+
+  /* Extra small screens - single column for advantages */
+  .advantages-grid,
+  .advantages-grid[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .advantages-grid[style*="repeat(3"] {
+    grid-template-columns: 1fr !important;
   }
 }
 
@@ -2567,4 +2921,597 @@ html, body, .navbar, .capability-pill-card, .project-card, .advantage-card,
 
 .fab-btn:hover {
   transform: scale(1.15) translateY(-3px);
+}
+
+/* ==========================================================================
+   ENHANCED SMOOTH TRANSITIONS FOR PAGE NAVIGATION
+   ========================================================================== */
+
+/* Smooth link transitions */
+a {
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Enhanced button transitions */
+.btn-hero-primary,
+.btn-hero-secondary,
+.btn-cta-primary,
+.btn-inspect-machine,
+.filter-btn {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Card hover lift with smooth shadow */
+.project-card,
+.advantage-card,
+.capability-pill-card,
+.metric-card,
+.client-card-item,
+.infra-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Image zoom on hover */
+.project-thumb-box img,
+.infra-image-box img,
+.hero-image-box img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Smooth table row transitions */
+.tech-table tr {
+  transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Input focus transitions */
+.form-input,
+.form-select,
+.table-search-input {
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-input:focus,
+.form-select:focus,
+.table-search-input:focus {
+  transform: translateY(-1px);
+}
+
+/* Footer link smooth hover */
+.footer-links a {
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--brand-primary);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-links a:hover::after {
+  width: 100%;
+}
+
+/* Modal smooth appearance */
+.modal-backdrop {
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-container {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Mobile menu smooth slide */
+.nav-menu {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Section content fade in on scroll */
+.section-header,
+.hero-content-col,
+.hero-media-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Loading state for content */
+.content-loading {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.content-loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   MOBILE OPTIMIZATIONS - Enhanced for all screen sizes
+   ========================================================================== */
+
+/* Large phones (iPhone 14 Pro Max, Samsung S24 Ultra) */
+@media (max-width: 430px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero-heading {
+    font-size: 1.65rem;
+    line-height: 1.15;
+  }
+
+  .hero-subtext {
+    font-size: 0.875rem;
+  }
+
+  .hero-image-box {
+    height: 200px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-description {
+    font-size: 0.9rem;
+  }
+
+  .metric-value {
+    font-size: 1.75rem;
+  }
+
+  .project-thumb-box {
+    height: 180px;
+  }
+
+  .client-card-item {
+    padding: 0.875rem;
+  }
+
+  .floating-action-desk {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .fab-btn {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* iPhone 14/15, Pixel 7, Samsung S23 */
+@media (max-width: 393px) {
+  .hero-heading {
+    font-size: 1.55rem;
+  }
+
+  .hero-image-box {
+    height: 190px;
+  }
+
+  .metric-card {
+    padding: 0.85rem 0.65rem;
+  }
+
+  .metric-value {
+    font-size: 1.6rem;
+  }
+
+  .btn-hero-primary, .btn-hero-secondary {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .project-thumb-box {
+    height: 170px;
+  }
+
+  .project-card-title {
+    font-size: 1rem;
+  }
+
+  .advantage-card {
+    padding: 1.25rem;
+  }
+
+  .advantage-title {
+    font-size: 1.1rem;
+  }
+
+  .infra-image-box {
+    height: 180px;
+  }
+}
+
+/* iPhone SE, mini phones */
+@media (max-width: 375px) {
+  .hero-heading {
+    font-size: 1.45rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.85rem;
+  }
+
+  .hero-image-box {
+    height: 175px;
+  }
+
+  .metrics-grid {
+    gap: 0.5rem;
+  }
+
+  .metric-card {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .metric-value {
+    font-size: 1.4rem;
+  }
+
+  .metric-label {
+    font-size: 0.7rem;
+  }
+
+  .section-spacing {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .project-thumb-box {
+    height: 160px;
+  }
+
+  .filter-btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .client-card-item {
+    padding: 0.75rem;
+  }
+
+  .client-card-name {
+    font-size: 0.8rem;
+  }
+
+  .footer-grid {
+    gap: 1.5rem;
+  }
+
+  .footer-col-title {
+    font-size: 0.9rem;
+  }
+}
+
+/* Very small phones (iPhone SE 1st gen, older Android) */
+@media (max-width: 320px) {
+  .brand-logo-img {
+    height: 20px;
+    max-width: 115px;
+  }
+
+  .hero-heading {
+    font-size: 1.35rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.8rem;
+  }
+
+  .hero-image-box {
+    height: 160px;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .metric-card {
+    padding: 0.75rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+
+  .btn-hero-primary, .btn-hero-secondary {
+    font-size: 0.8rem;
+    padding: 0.65rem 0.875rem;
+  }
+
+  .project-thumb-box {
+    height: 150px;
+  }
+
+  .project-card-title {
+    font-size: 0.95rem;
+  }
+
+  .project-card-desc {
+    font-size: 0.8rem;
+  }
+
+  .advantage-card {
+    padding: 1rem;
+  }
+
+  .advantage-title {
+    font-size: 1rem;
+  }
+
+  .advantage-desc {
+    font-size: 0.8rem;
+  }
+
+  .infra-image-box {
+    height: 160px;
+  }
+
+  .infra-title {
+    font-size: 1rem;
+  }
+
+  .infra-desc {
+    font-size: 0.8rem;
+  }
+
+  .conversion-title {
+    font-size: 1.35rem;
+  }
+
+  .conversion-text {
+    font-size: 0.875rem;
+  }
+
+  .rfq-calculator-card {
+    padding: 1.25rem;
+  }
+
+  .rfq-form-title {
+    font-size: 1.15rem;
+  }
+
+  .form-label {
+    font-size: 0.7rem;
+  }
+
+  .form-input, .form-select {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .modal-media-header {
+    height: 180px;
+  }
+
+  .modal-content-body {
+    padding: 1rem;
+  }
+
+  .floating-action-desk {
+    bottom: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .fab-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .fab-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Foldable phones - outer screen */
+@media (max-width: 280px) {
+  .brand-logo-img {
+    height: 18px;
+    max-width: 100px;
+  }
+
+  .hero-heading {
+    font-size: 1.2rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.75rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .metric-value {
+    font-size: 1.25rem;
+  }
+
+  .project-thumb-box {
+    height: 140px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .hero-image-box {
+    height: 200px;
+  }
+
+  .section-spacing {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .metric-card {
+    padding: 0.75rem;
+  }
+
+  .floating-action-desk {
+    display: none;
+  }
+}
+
+/* Tablets in portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-image-box {
+    height: 320px;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .advantages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clients-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .project-card:hover,
+  .advantage-card:hover,
+  .capability-pill-card:hover,
+  .metric-card:hover,
+  .client-card-item:hover,
+  .infra-card:hover {
+    transform: none;
+  }
+
+  /* Increase touch targets */
+  .nav-link,
+  .filter-btn,
+  .btn-inspect-machine {
+    min-height: 44px;
+  }
+
+  /* Remove hover-based animations */
+  .project-card:hover .project-thumb-box img,
+  .infra-card:hover .infra-image-box img,
+  .hero-card-featured:hover .hero-image-box img {
+    transform: none;
+  }
+
+  /* Add active state feedback */
+  .project-card:active,
+  .advantage-card:active,
+  .capability-pill-card:active,
+  .client-card-item:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Better touch scrolling */
+  .nav-menu {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent text selection on interactive elements */
+  .nav-link,
+  .filter-btn,
+  .btn-hero-primary,
+  .btn-hero-secondary,
+  .btn-cta-primary,
+  .btn-inspect-machine,
+  .fab-btn {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .brand-logo-img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Safe area insets for notched phones */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .navbar-wrapper {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+  }
+
+  .floating-action-desk {
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .footer-section {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Dark mode preference for mobile */
+@media (prefers-color-scheme: dark) {
+  /* Only apply if user hasn't manually set theme */
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

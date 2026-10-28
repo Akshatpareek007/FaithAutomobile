@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="icon" type="image/png" href="/assets/images/logo_dark.png" />
+  <link rel="icon" type="image/png" href="/images/logo_dark.png" />
 </head>
 <body>
 
@@ -27,8 +27,8 @@
   <div class="navbar-wrapper">
     <nav class="navbar" id="mainNavbar">
       <a href="/" class="brand-logo-wrap" id="navLogo" title="Faith Automation Works">
-        <img src="/assets/images/logo_transparent.png" alt="Faith Automation Works" class="brand-logo-img logo-light" />
-        <img src="/assets/images/logo_dark.png" alt="Faith Automation Works" class="brand-logo-img logo-dark" />
+        <img src="/images/logo_transparent.png" alt="Faith Automation Works" class="brand-logo-img logo-light" />
+        <img src="/images/logo_dark.png" alt="Faith Automation Works" class="brand-logo-img logo-dark" />
       </a>
 
       <ul class="nav-menu" id="navMenu">
@@ -79,36 +79,43 @@
   <section class="section-spacing" style="padding-top: 1rem;">
     <div class="container">
       <div class="hero-grid" style="align-items: stretch;">
-        <div class="hero-card-featured" style="padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="hero-card-featured director-card" style="padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-elevated) 100%); border: 2px solid var(--border-highlight);">
           <div>
-            <h2 style="font-size: 1.85rem; color: #FFFFFF; margin-bottom: 1rem;">Mr. Kaushal K Khandelwal</h2>
-            <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--brand-cyan-light); margin-bottom: 1.5rem;">
-              Managing Director • 10+ Years Auto Components Engineering
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+              <span style="background: var(--brand-primary); color: white; padding: 0.35rem 0.75rem; border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Managing Director</span>
             </div>
-            <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
+            <h2 style="font-size: 2rem; color: var(--text-title); margin-bottom: 0.5rem; font-weight: 800; letter-spacing: -0.02em;">Mr. Kaushal K Khandelwal</h2>
+            <div style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--brand-cyan); margin-bottom: 1.5rem; font-weight: 600;">
+              10+ Years Auto Components Engineering
+            </div>
+            <p style="color: var(--text-main); line-height: 1.7; margin-bottom: 1.25rem; font-size: 1rem;">
               With over a decade of hands-on experience in automotive mechanical designing, tool room operations, and automation kinematics, Mr. Kaushal Khandelwal has spearheaded Faith Automation from its inception into a Tier-1 preferred partner.
             </p>
-            <p style="color: var(--text-muted); line-height: 1.7;">
+            <blockquote style="color: var(--brand-primary); line-height: 1.7; font-style: italic; border-left: 3px solid var(--brand-primary); padding-left: 1rem; margin: 0; font-weight: 500;">
               "The salient feature of this organization is to give top most priority to the customer's need and responding to it in a way that achieves 100% customer satisfaction."
-            </p>
+            </blockquote>
           </div>
 
-          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle); display: flex; gap: 2rem;">
+          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--border-subtle); display: flex; gap: 2rem;">
             <div>
-              <div style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF; font-family: var(--font-display);">June 2015</div>
-              <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-dim);">ESTABLISHED</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--text-title); font-family: var(--font-display);">June 2015</div>
+              <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); font-weight: 600;">ESTABLISHED</div>
             </div>
             <div>
-              <div style="font-size: 1.75rem; font-weight: 800; color: var(--brand-cyan-light); font-family: var(--font-display);">10+ Yrs</div>
-              <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-dim);">LEADERSHIP</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--brand-primary); font-family: var(--font-display);">10+ Yrs</div>
+              <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); font-weight: 600;">LEADERSHIP</div>
             </div>
           </div>
         </div>
 
-        <div class="hero-card-featured" style="padding: 2.5rem; background: var(--conversion-bg); border-color: var(--border-highlight); display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="hero-card-featured quality-card" style="padding: 2.5rem; background: linear-gradient(135deg, var(--bg-surface) 0%, var(--brand-primary-muted) 100%); border: 2px solid var(--border-highlight); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <h2 style="font-size: 1.85rem; color: #FFFFFF; margin-bottom: 1.25rem;">Commitment to Customer Delight</h2>
-            <blockquote style="font-size: 1.1rem; color: #FFFFFF; font-style: italic; line-height: 1.7; padding-left: 1.25rem; border-left: 3px solid var(--brand-primary); margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--brand-primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10" stroke="currentColor" stroke-width="2"/></svg>
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.05em;">Quality Policy</span>
+            </div>
+            <h2 style="font-size: 1.75rem; color: var(--text-title); margin-bottom: 1.25rem; font-weight: 700;">Commitment to Customer Delight</h2>
+            <blockquote style="font-size: 1.05rem; color: var(--text-main); font-style: italic; line-height: 1.7; padding-left: 1.25rem; border-left: 3px solid var(--brand-primary); margin-bottom: 1.5rem; font-weight: 500;">
               "To achieve customer delight through continuous involvement in quality management systems, innovative value addition in product quality, in-time delivery and quick response to the queries."
             </blockquote>
             <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
@@ -116,11 +123,11 @@
             </p>
           </div>
 
-          <div style="margin-top: 2rem; background: var(--bg-surface-elevated); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-            <div style="font-size: 0.8125rem; font-family: var(--font-mono); color: var(--brand-primary-light); text-transform: uppercase; margin-bottom: 0.25rem;">
+          <div style="margin-top: 2rem; background: var(--bg-surface); padding: 1.25rem; border-radius: var(--radius-md); border: 2px solid var(--border-subtle); box-shadow: var(--shadow-sm);">
+            <div style="font-size: 0.8125rem; font-family: var(--font-mono); color: var(--brand-primary); text-transform: uppercase; margin-bottom: 0.35rem; font-weight: 700;">
               QUALITY ASSURANCE HIGHLIGHT
             </div>
-            <div style="font-size: 0.9rem; color: #FFFFFF;">
+            <div style="font-size: 0.9rem; color: var(--text-main); font-weight: 500;">
               100% CMM-certified inspection gauges with calibrated dial indicators and Go/No-Go pins.
             </div>
           </div>
@@ -183,7 +190,7 @@
       <div class="footer-grid">
         <div>
           <div class="brand-logo-wrap" style="margin-bottom: 0.75rem;">
-            <img src="/assets/images/logo_dark.png" alt="Faith Automation Works" class="brand-logo-img" />
+            <img src="/images/logo_dark.png" alt="Faith Automation Works" class="brand-logo-img" />
           </div>
           <p class="footer-brand-desc">
             Dedicated manufacturer of Special Purpose Machines (SPMs), automated flow lines, robotic welding fixtures, vision inspection stations, and precision checking gauges.

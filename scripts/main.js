@@ -7,6 +7,7 @@ import { siteConfig, capabilityPills, projectCatalog, toolRoomInventory, clients
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+  initPageTransitions();
   initThemeToggle();
   initNavbar();
   renderCapabilityPills();
@@ -18,6 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initMetricsCounter();
   initScrollReveal();
 });
+
+/* ==========================================================================
+   SMOOTH PAGE TRANSITIONS - No flash version
+   ========================================================================== */
+function initPageTransitions() {
+  // Just handle normal navigation - no overlay, no flash
+  // The browser will handle page transitions naturally
+  
+  // Add loaded class for subtle content animation
+  document.body.classList.add('page-loaded');
+}
 
 /* ==========================================================================
    THEME TOGGLE SYSTEM (LIGHT / DARK)
@@ -43,14 +55,24 @@ function initNavbar() {
   const navMenu = document.querySelector('.nav-menu');
   const navLinks = document.querySelectorAll('.nav-link');
 
-  // Sticky background on scroll with smooth transition
+  // Detect touch device
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+  // Sticky background on scroll with smooth transition (throttled for mobile)
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 30) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 30) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
-  });
+  }, { passive: true });
 
   // Set active link based on current page URL
   const currentPath = window.location.pathname;
@@ -110,6 +132,10 @@ function initNavbar() {
    SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER)
    ========================================================================== */
 function initScrollReveal() {
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+  
   const targets = document.querySelectorAll(`
     .section-header, 
     .capability-pill-card, 
@@ -123,6 +149,12 @@ function initScrollReveal() {
     .hero-card-featured
   `);
 
+  // If reduced motion is preferred, show all elements immediately
+  if (prefersReducedMotion) {
+    targets.forEach(el => el.classList.add('revealed'));
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -131,8 +163,8 @@ function initScrollReveal() {
       }
     });
   }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px -40px 0px'
+    threshold: isTouchDevice ? 0.05 : 0.08,
+    rootMargin: isTouchDevice ? '0px 0px -20px 0px' : '0px 0px -40px 0px'
   });
 
   // Apply stagger classes within parent grids
@@ -147,7 +179,9 @@ function initScrollReveal() {
   grids.forEach(grid => {
     const children = Array.from(grid.children);
     children.forEach((child, idx) => {
-      child.classList.add('reveal', `stagger-${(idx % 6) + 1}`);
+      // Shorter stagger delays on mobile
+      const staggerDelay = isTouchDevice ? (idx % 4) + 1 : (idx % 6) + 1;
+      child.classList.add('reveal', `stagger-${staggerDelay}`);
       observer.observe(child);
     });
   });

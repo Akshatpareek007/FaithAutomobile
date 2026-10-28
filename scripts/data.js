@@ -3,6 +3,20 @@
  * Extracted and compiled from official engineering profile
  */
 
+// Import all images for Vite to process
+import sharkFinImg from '../assets/images/shark-fin-assembly.jpg';
+import bumperAssemblyImg from '../assets/images/bumper-assembly.jpg';
+import roboticWeldingImg from '../assets/images/robotic-welding-cell.jpg';
+import yfgAssemblyImg from '../assets/images/yfg-assembly-line.jpg';
+import garnishVisionImg from '../assets/images/garnish-vision.jpg';
+import leverAssemblyImg from '../assets/images/lever-assembly.jpg';
+import dotMarkingImg from '../assets/images/dot-marking.jpg';
+import leakTestImg from '../assets/images/leak-test-rig.jpg';
+import mahindraFixtureImg from '../assets/images/mahindra-w501-fixture.jpg';
+import vmcManfordImg from '../assets/images/vmc-manford.jpg';
+import torqueTestImg from '../assets/images/torque-test-machine.jpg';
+import m1trMillingImg from '../assets/images/m1tr-milling-1.jpg';
+
 export const siteConfig = {
   name: "Faith Automation Works",
   tagline: "Automotive Assembly Lines, Robotic Cells & Precision Tool Room",
@@ -55,7 +69,7 @@ export const projectCatalog = [
     category: "assembly",
     title: "Shark Fin Antenna Multi-Station Assembly Line",
     client: "Tier-1 Automotive Electronics",
-    image: "/assets/images/shark-fin-assembly.jpg",
+    image: sharkFinImg,
     specs: {
       "Cycle Time": "< 18 Seconds",
       "Stations": "Multi-Station Ergonomic Line",
@@ -69,7 +83,7 @@ export const projectCatalog = [
     category: "assembly",
     title: "Automotive Bumper Assembly & Pressing Rig",
     client: "Automotive Exterior Systems",
-    image: "/assets/images/bumper-assembly.jpg",
+    image: bumperAssemblyImg,
     specs: {
       "Clamping": "Multi-Point Pneumatic Cylinders",
       "Lighting": "Integrated High-Lumen Inspection Canopy",
@@ -83,7 +97,7 @@ export const projectCatalog = [
     category: "robotics",
     title: "Turnkey Robotic Welding Cell (YHB Model)",
     client: "Automotive Structural Components",
-    image: "/assets/images/robotic-welding-cell.jpg",
+    image: roboticWeldingImg,
     specs: {
       "Robot": "6-Axis Industrial Articulated Robot",
       "Positioner": "Dual-Station Indexing Turntable",
@@ -97,7 +111,7 @@ export const projectCatalog = [
     category: "assembly",
     title: "YFG Automated Conveyor Assembly Line",
     client: "Automotive Tier-1 Sub-Assemblies",
-    image: "/assets/images/yfg-assembly-line.jpg",
+    image: yfgAssemblyImg,
     specs: {
       "Conveyor": "Synchronous Palletized Transfer System",
       "Traceability": "2D Barcode Scanner at Each Station",
@@ -111,7 +125,7 @@ export const projectCatalog = [
     category: "vision",
     title: "Garnish Optical Vision Inspection Machine",
     client: "JRG Automotive Bawal",
-    image: "/assets/images/garnish-vision.jpg",
+    image: garnishVisionImg,
     specs: {
       "Cameras": "High-Resolution Industrial Telecentric Lens",
       "Checking": "Clip Presence, Color Matching, Alignment",
@@ -125,7 +139,7 @@ export const projectCatalog = [
     category: "assembly",
     title: "YG8 & Y9T Gear Shift Lever Assembly Line",
     client: "Transmission Systems Leader",
-    image: "/assets/images/lever-assembly.jpg",
+    image: leverAssemblyImg,
     specs: {
       "Operations": "Bush Pressing, Greasing, Pin Insertion",
       "Sensors": "Linear Transducers & Load Cells",
@@ -139,7 +153,7 @@ export const projectCatalog = [
     category: "marking",
     title: "Pneumatic Dot Pin Marking & Verification Rig",
     client: "Engine & Powertrain Components",
-    image: "/assets/images/dot-marking.jpg",
+    image: dotMarkingImg,
     specs: {
       "Marking Head": "Pneumatic Tungsten Carbide Stylus",
       "Readable Codes": "Alphanumeric, VIN, 2D Data Matrix",
@@ -153,7 +167,7 @@ export const projectCatalog = [
     category: "testing",
     title: "Oil Pan Differential Pressure Leak Test SPM",
     client: "Engine Powertrain Systems",
-    image: "/assets/images/leak-test-rig.jpg",
+    image: leakTestImg,
     specs: {
       "Method": "Differential Pressure Decay (Air-to-Air)",
       "Resolution": "0.1 Pa / 0.001 sccm",
@@ -167,7 +181,7 @@ export const projectCatalog = [
     category: "fixtures",
     title: "Mahindra W501 Side Cover Checking Fixture",
     client: "JRG Automotive / Mahindra Tier-1",
-    image: "/assets/images/mahindra-w501-fixture.jpg",
+    image: mahindraFixtureImg,
     specs: {
       "Base Material": "Stabilized Tool Steel & Anodized Aluminum Base",
       "Inspection": "Flush & Gap Dial Indicators + Go/No-Go Pins",
@@ -181,7 +195,7 @@ export const projectCatalog = [
     category: "toolroom",
     title: "MANFORD High-Precision Vertical Machining Center",
     client: "In-House Tool Room Facility",
-    image: "/assets/images/vmc-manford.jpg",
+    image: vmcManfordImg,
     specs: {
       "Working Table": "700 mm x 500 mm",
       "Spindle": "High-Speed Rigid Tapping Spindle",
@@ -195,7 +209,7 @@ export const projectCatalog = [
     category: "testing",
     title: "Lock-to-Lock Mechanism Torque Testing Machine",
     client: "Steering & Mechanical Assemblies",
-    image: "/assets/images/torque-test-machine.jpg",
+    image: torqueTestImg,
     specs: {
       "Torque Sensor": "Dynamic Rotary Torque Transducer",
       "Measurement": "Peak Torque, Running Torque, Angle Profiling",
@@ -209,7 +223,7 @@ export const projectCatalog = [
     category: "toolroom",
     title: "M1TR Milling Machine with Precision DRO",
     client: "In-House Tool Room Facility",
-    image: "/assets/images/m1tr-milling-1.jpg",
+    image: m1trMillingImg,
     specs: {
       "Bed Size": "450 mm x 1050 mm",
       "Readout": "3-Axis Digital Readout (DRO)",

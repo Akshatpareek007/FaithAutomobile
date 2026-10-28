@@ -6,9 +6,15 @@
   "scripts": {
     "dev": "vite --port 3000 --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
-    "vite": "^6.0.0"
+    "@cloudflare/vite-plugin": "^1.65.0",
+    "vite": "^6.0.0",
+    "wrangler": "^4.154.0"
+  },
+  "dependencies": {
+    "glob": "^14.0.3"
   }
 }
